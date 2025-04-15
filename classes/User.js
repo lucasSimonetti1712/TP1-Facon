@@ -17,6 +17,7 @@ class User{
 }
 
 const users = [];
+users.push(new User ("J", "a@pio", "123"));
 users.push(new User ("Juani", "jteruya@pioix.edu.ar", "123"));
 users.push(new User ("Santi", "ssilva@pioix.edu.ar", "456"));
 users.push(new User ("Mati", "mmarchesi@pioix.edu.ar", "789"));
