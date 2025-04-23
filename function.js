@@ -21,10 +21,10 @@ function ingresar(){
     let result = login(email, password)
 
     if (result>0){
+        mostrarNotas()
         ui.changeScreen()
         ui.setUser(users[result - 1].name)
         userId=users[result - 1].id
-        console.log(userId)
     }
     else if (result==0){
         alert("La contraseña es incorrecta")
@@ -33,6 +33,7 @@ function ingresar(){
         alert("El usuario esta mal puesto")
     }
     idlog = result
+    mostrarNotas()
 }
 
 
@@ -42,6 +43,7 @@ function registrar(email,user,password){
         alert("Ya existe un usuario con este correo")
     } else{
         users.push(new User(user,email,password))
+        ingresar()
     }
 }
 
@@ -56,10 +58,14 @@ function crearUsuario(){
 }
 
 function mostrarNotas(){
-    userId=users[result - 1].id
-    console.log(userId)
-    for(let i=1;i<notes.length;i++){
-        nota=notes[i - 1].users
-        console.log(nota)
+    let userId=users[idlog - 1].id
+    for(let i=0;i<notes.length;i++){
+        if(notes[i].users.includes(userId)){
+            console.log(notes[i])
+            ui.createNote(notes[i].id,notes[i].title,notes[i].content,notes[i].category)
+            ui.clearSelect()
+            ui.addNoteToSelect(notes[i].id,notes[i].title)
+        }
+
     }
 }
