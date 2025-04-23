@@ -15,25 +15,24 @@ function login(email,password){
   }
 
 function ingresar(){
-    let email=ui.getEmail()
-    let password=ui.getPassword()
+    let email = ui.getEmail()
+    let password = ui.getPassword()
 
     let result = login(email, password)
 
-    if (result>0){
-        mostrarNotas()
+    if (result > 0){
+        idlog = result
         ui.changeScreen()
         ui.setUser(users[result - 1].name)
-        userId=users[result - 1].id
+        userId = users[result - 1].id
+        mostrarNotas()
     }
-    else if (result==0){
+    else if (result == 0){
         alert("La contraseña es incorrecta")
     }
-    else{
-        alert("El usuario esta mal puesto")
+    else {
+        alert("El usuario está mal puesto")
     }
-    idlog = result
-    mostrarNotas()
 }
 
 
@@ -68,4 +67,40 @@ function mostrarNotas(){
         }
 
     }
+}
+
+function cerrarsesion(){
+    if(confirm("¿Estas seguro que queres cerrar sesion?")){
+        idlog=0 
+        ui.changeScreen()
+        ui.clearLoginInputs()
+    }
+}
+
+function crearnota(title, category, content) {
+    try {
+        notes.push(new Note (title,category,content,idlog));
+        let ultimo=notes.length
+        return notes[ultimo-1].id
+    } catch (e) {
+        return -1
+    }
+}
+function agregarnota(){
+    let title=ui.getNoteTitle()
+    let category=ui.getNoteContent()
+    let content=ui.getNoteCategory()
+    let idNota = crearnota(title, category, content);
+    if (idNota>-1) {
+        ui.createNote(idNota,title,category,content)
+        ui.addNoteToSelect(idNota,title)
+        alert ("La nota fue creada correctamente")
+    }else{
+        alert ("Hubo un problema al crear la  nota")
+    }
+}
+
+function vernota(){ 
+    idnota=ui.getSelectedNote() 
+    console.log(notes[idnota-1])
 }

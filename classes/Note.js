@@ -18,6 +18,16 @@ class Note{
         this.users = [userId];
         this.modifications = [];
     }
+
+    addModification(userId) {
+        let modifify= new Modification(
+            userId,
+            this.content,
+            this.title,
+            this.category
+        );
+        this.modifications.push(modify);
+    }
 }
 
 const notes = [];
