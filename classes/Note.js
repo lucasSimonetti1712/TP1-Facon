@@ -19,14 +19,11 @@ class Note{
         this.modifications = [];
     }
 
-    addModification(userId) {
-        let modifify= new Modification(
-            userId,
-            this.content,
-            this.title,
-            this.category
-        );
-        this.modifications.push(modify);
+    addModification(UserId,newContent,newTitle,newCategory) {
+        this.modifications.push(new Modification(UserId,this.content,this.title,this.category))
+        this.content = newContent;
+        this.category = newCategory;
+        this.title = newTitle;
     }
 }
 

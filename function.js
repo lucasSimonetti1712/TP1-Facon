@@ -78,14 +78,15 @@ function cerrarsesion(){
 }
 
 function crearnota(title, category, content) {
-    try {
+    if (title=="" || category == "" || content == ""){
+        return -1      
+    } else {
         notes.push(new Note (title,category,content,idlog));
         let ultimo=notes.length
         return notes[ultimo-1].id
-    } catch (e) {
-        return -1
     }
 }
+
 function agregarnota(){
     let title=ui.getNoteTitle()
     let category=ui.getNoteContent()
@@ -96,11 +97,35 @@ function agregarnota(){
         ui.addNoteToSelect(idNota,title)
         alert ("La nota fue creada correctamente")
     }else{
-        alert ("Hubo un problema al crear la  nota")
+        alert ("Hubo un problema al crear la nota")
     }
 }
 
 function vernota(){ 
     idnota=ui.getSelectedNote() 
     console.log(notes[idnota-1])
+}
+
+function modificarnota(title,category,content,idnota){
+    console.log("A")
+    for(let i=0;i<notes.length;i++){
+        if(notes[i].users.includes(idnota)){
+            Note.addModification(title,category,content)   
+        }
+        if(title=="" || category == "" || content == ""){
+            return -1 
+        }else 
+    }
+}
+
+function editNote(idnota){
+    let noteTitle = ui.getNoteTitle()
+    let noteContent = ui.getNoteContent()
+    let noteCategory = ui.getNoteCategory()
+    let result=modificarnota(noteTitle,noteCategory,noteContent)
+    if (result>0){
+        alert("Ya se ha modificado")
+    }else{
+        alert("No se pudo moficar")
+    }
 }
