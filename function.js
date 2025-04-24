@@ -106,26 +106,35 @@ function vernota(){
     console.log(notes[idnota-1])
 }
 
-function modificarnota(title,category,content,idnota){
-    console.log("A")
+function modificarnota(title,category,content,id){
+    console.log(idlog)
     for(let i=0;i<notes.length;i++){
-        if(notes[i].users.includes(idnota)){
-            Note.addModification(title,category,content)   
-        }
-        if(title=="" || category == "" || content == ""){
+        if(notes[i].users.includes(idlog)){
+            notes[i].addModification(userId,title,category,content)
+            return notes[i].id
+        }else if(title=="" || category == "" || content == ""){
             return -1 
-        }else 
-    }
+        }else{
+    }}
 }
 
-function editNote(idnota){
+function editNote(idlog){
     let noteTitle = ui.getNoteTitle()
     let noteContent = ui.getNoteContent()
     let noteCategory = ui.getNoteCategory()
     let result=modificarnota(noteTitle,noteCategory,noteContent)
     if (result>0){
+        ui.clearAllNotes();
+        mostrarNotas()
         alert("Ya se ha modificado")
     }else{
         alert("No se pudo moficar")
     }
+}
+
+function eraseNote(id){
+    ui.removeNote(id)
+    ui.clearAllNotes();
+    mostrarNotas()
+    alert ("Se ha borrado la nota")
 }
