@@ -133,8 +133,15 @@ function editNote(idlog){
 }
 
 function eraseNote(id){
-    ui.removeNote(id)
-    ui.clearAllNotes();
-    mostrarNotas()
-    alert ("Se ha borrado la nota")
+    ui.removeNote(id);
+    for(let i=0;i<notes.length; i++){
+        if(id==notes[i].id){
+            notes.splice(i,1)
+            ui.clearAllNotes();
+            mostrarNotas();
+            alert("Se ha borrado la nota");
+        }
+    }
+    
 }
+
