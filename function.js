@@ -47,13 +47,14 @@ function registrar(email,user,password){
 }
 
 function crearUsuario(){
-    console.log("Hola")
     let email=ui.getEmail()
     let user=ui.getUser()
     let password=ui.getPassword()
-
-    let result = registrar(email,user,password)
-
+    if(email=="" || user == "" || password == ""){
+        alert("Debes completar todos los campos")
+    }else{
+        let result = registrar(email,user,password)
+    }
 }
 
 function mostrarNotas(){
@@ -103,7 +104,11 @@ function agregarnota(){
 
 function vernota(){ 
     idnota=ui.getSelectedNote() 
-    console.log(notes[idnota-1])
+    for(let i=0;i<notes.length; i++){
+        if(idnota==notes[i].id){
+            console.log(notes[i])
+        }
+    }
 }
 
 function modificarnota(title,category,content,id){
