@@ -28,10 +28,11 @@ function ingresar(){
         mostrarNotas()
     }
     else if (result == 0){
-        alert("La contraseña es incorrecta")
+        ui.showModal("La contraseña es incorrecta", "Intente nuevamente")
     }
     else {
-        alert("El usuario está mal puesto")
+        ui.showModal("El usuario está mal puesto", "Intente nuevamente")
+
     }
 }
 
@@ -39,7 +40,7 @@ function ingresar(){
 function registrar(email,user,password){
     let result = login(email,password)
     if (result>=0){
-        alert("Ya existe un usuario con este correo")
+        ui.showModal("Usuario ya registrado", "Por favor, ingrse un correo que no esté registrado en un usuario existente")
     } else{
         users.push(new User(user,email,password))
         ingresar()
@@ -51,7 +52,7 @@ function crearUsuario(){
     let user=ui.getUser()
     let password=ui.getPassword()
     if(email=="" || user == "" || password == ""){
-        alert("Debes completar todos los campos")
+        ui.showModal("Campos incompletos", "Por favor, complete todos los campos obligatorios")
     }else{
         let result = registrar(email,user,password)
     }
@@ -96,9 +97,9 @@ function agregarnota(){
     if (idNota>-1) {
         ui.createNote(idNota,title,category,content)
         ui.addNoteToSelect(idNota,title)
-        alert ("La nota fue creada correctamente")
+        ui.showModal ("Nota creada con exito", "Puede ver su nota al final de la página")
     }else{
-        alert ("Hubo un problema al crear la nota")
+        ui.showModal ("Problema al crear la nota", "Por favor, revise y corriga los datos de la nota")
     }
 }
 
@@ -131,9 +132,9 @@ function editNote(idlog){
     if (result>0){
         ui.clearAllNotes();
         mostrarNotas()
-        alert("Ya se ha modificado")
+        ui.showModal("Nota modificada", "La nota fue actualizada correctamente")
     }else{
-        alert("No se pudo moficar")
+        ui.showModal("No se pudo moficar la nota", "Por favor, complete los campos con la informacion correcta")
     }
 }
 
@@ -144,7 +145,7 @@ function eraseNote(id){
             notes.splice(i,1)
             ui.clearAllNotes();
             mostrarNotas();
-            alert("Se ha borrado la nota");
+            ui.showModal("Nota borrada", "La nota se ha borrado con exito");
         }
     }
     
