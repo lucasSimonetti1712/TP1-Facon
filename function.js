@@ -138,16 +138,43 @@ function editNote(idlog){
     }
 }
 
-function eraseNote(id){
-    ui.removeNote(id);
-    for(let i=0;i<notes.length; i++){
-        if(id==notes[i].id){
+function borrarNota(id) {
+    for (let i = 0; i < notes.length; i++) {
+        if (id === notes[i].id) {
             notes.splice(i,1)
-            ui.clearAllNotes();
-            mostrarNotas();
-            ui.showModal("Nota borrada", "La nota se ha borrado con exito");
+            return true
         }
+    }
+    return false;
+
+
+}
+
+function eraseNote(id){
+    if (borrarNota(id)) {
+        ui.removeNote(id)
+        ui.showModal("Exito","Se ha borrado correctamente la nota")
+    } else {
+        ui.showModal("Error","No se ha podido borrar la nota")
     }
     
 }
+
+function buscarContenido(){
+    let coincidencias = false;
+    let contenido=ui.getSearchContent()
+    if(contenido.length>=4){
+        for (let i = 0; i < notes.length; i++){
+            if (notes[i].content.includes(contenido)) {
+                coincidencias = true;
+                console.log(notes[i])
+            }
+        }
+        if (!coincidencias)
+            console.log("No hay coincidencias")
+    }else{
+        console.log("Ingrese mas de 4 caracteres")
+    }
+}
+
 

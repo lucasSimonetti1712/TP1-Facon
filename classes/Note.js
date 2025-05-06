@@ -25,6 +25,22 @@ class Note{
         this.category = newCategory;
         this.title = newTitle;
     }
+ 
+    addUser(idUsuario) {
+        let found = false;
+        for(let i=0;i<users.length;i++) {
+            if(users[i].id == idUsuario) {
+                if (!this.users.includes(idUsuario)) {
+                    this.users.push(idUsuario);
+                    console.log("Usuario agregado", idUsuario);
+                } else {
+                    console.log("Usuario repetido");
+                }
+            }
+        }
+        
+        
+    }
 }
 
 const notes = [];
