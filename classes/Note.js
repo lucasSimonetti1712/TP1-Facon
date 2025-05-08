@@ -27,7 +27,6 @@ class Note{
     }
  
     addUser(idUsuario) {
-        let found = false;
         for(let i=0;i<users.length;i++) {
             if(users[i].id == idUsuario) {
                 if (!this.users.includes(idUsuario)) {

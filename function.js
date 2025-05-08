@@ -13,19 +13,22 @@ function login(email,password){
     }
     return -1
   }
-
+//CODIGO AREGLADO
 function ingresar(){
     let email = ui.getEmail()
     let password = ui.getPassword()
 
     let result = login(email, password)
-
     if (result > 0){
-        idlog = result
-        ui.changeScreen()
-        ui.setUser(users[result - 1].name)
-        userId = users[result - 1].id
-        mostrarNotas()
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email==email) {
+                idlog = result
+                ui.changeScreen()
+                ui.setUser(users[i].name)
+                userId = users[i].id
+                mostrarNotas()
+            }
+        }
     }
     else if (result == 0){
         ui.showModal("La contraseña es incorrecta", "Intente nuevamente")
@@ -36,11 +39,11 @@ function ingresar(){
     }
 }
 
-
+//CODIGO AREGLADO
 function registrar(email,user,password){
     let result = login(email,password)
     if (result>=0){
-        ui.showModal("Usuario ya registrado", "Por favor, ingrse un correo que no esté registrado en un usuario existente")
+        return true
     } else{
         users.push(new User(user,email,password))
         ingresar()
@@ -55,21 +58,23 @@ function crearUsuario(){
         ui.showModal("Campos incompletos", "Por favor, complete todos los campos obligatorios")
     }else{
         let result = registrar(email,user,password)
+        if(result){
+            ui.showModal("Usuario ya registrado", "Por favor, ingrse un correo que no esté registrado en un usuario existente")
+        }
     }
 }
-
+//CODIGO AREGLADO
 function mostrarNotas(){
     let userId=users[idlog - 1].id
     for(let i=0;i<notes.length;i++){
-        if(notes[i].users.includes(userId)){
-            console.log(notes[i])
-            ui.createNote(notes[i].id,notes[i].title,notes[i].content,notes[i].category)
-            ui.clearSelect()
-            ui.addNoteToSelect(notes[i].id,notes[i].title)
+            if(notes[i].users==userId){
+                console.log(notes[i])
+                ui.createNote(notes[i].id,notes[i].title,notes[i].content,notes[i].category)
+                ui.clearSelect()
+                ui.addNoteToSelect(notes[i].id,notes[i].title)
+            }
         }
-
     }
-}
 
 function cerrarsesion(){
     if(confirm("¿Estas seguro que queres cerrar sesion?")){
@@ -111,8 +116,8 @@ function vernota(){
         }
     }
 }
-
-function modificarnota(title,category,content,id){
+//CODIGO AREGLADO
+function modificarnota(category,content,title,idlog){
     console.log(idlog)
     for(let i=0;i<notes.length;i++){
         if(notes[i].users.includes(idlog)){
@@ -124,11 +129,12 @@ function modificarnota(title,category,content,id){
     }}
 }
 
+//CODIGO AREGLADO
 function editNote(idlog){
     let noteTitle = ui.getNoteTitle()
     let noteContent = ui.getNoteContent()
     let noteCategory = ui.getNoteCategory()
-    let result=modificarnota(noteTitle,noteCategory,noteContent)
+    let result=modificarnota(noteTitle,noteCategory,noteContent,idlog)
     if (result>0){
         ui.clearAllNotes();
         mostrarNotas()
