@@ -40,6 +40,20 @@ class Note{
         
         
     }
+
+    deleteUser(idUsuario) {
+        if (!this.users.includes(idUsuario)) {
+            console.log("Usuario no es dueño");
+        }
+    
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i] === idUsuario) {
+                this.users.splice(i, 1);
+                console.log("Usuario borrado");
+            }
+        }
+    }
+    
 }
 
 const notes = [];
