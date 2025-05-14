@@ -60,21 +60,25 @@ function crearUsuario() {
         let result = registrar(email, user, password)
         if (result == -1) {
             ui.showModal("Usuario ya registrado", "Por favor, ingrse un correo que no esté registrado en un usuario existente")
-        }else{
+        } else {
             ingresar()
         }
     }
 }
 //CODIGO AREGLADO
 function mostrarNotas() {
-    let userId = users[idlog - 1].id
+    let userId = idlog
+    ui.clearAllNotes()
+    ui.clearSelect()
     for (let i = 0; i < notes.length; i++) {
-        if (notes[i].users == userId) {
-            console.log(notes[i])
-            ui.createNote(notes[i].id, notes[i].title, notes[i].content, notes[i].category)
-            ui.clearSelect()
-            ui.addNoteToSelect(notes[i].id, notes[i].title)
+        for (let j = 0; j < notes[i].users.length; j++) {
+            if (notes[i].users[j] == userId) {
+                console.log("Encontré nota: ", notes[i] )
+                ui.createNote(notes[i].id, notes[i].title, notes[i].content, notes[i].category)
+                ui.addNoteToSelect(notes[i].id, notes[i].title)
+            }
         }
+        
     }
 }
 
@@ -118,18 +122,28 @@ function vernota() {
         }
     }
 }
+
+function verModificacionesNota() {
+    idnota = ui.getSelectedNote()
+    for (let i = 0; i < notes.length; i++) {
+        if (idnota == notes[i].id) {
+            console.log(notes[i].modifications)
+        }
+    }
+}
+
 //CODIGO AREGLADO
 function modificarnota(id, content, title, category) {
     if (title == "" || category == "" || content == "") {
         return -1
     } else {
         for (let i = 0; i < notes.length; i++) {
-            if (notes[i].users.includes(idlog)) {
+            if (notes[i].id == id && notes[i].users.includes(idlog)) {
                 notes[i].addModification(idlog, content, title, category)
-                console.log(notes[i].addModification(id, content, title, category))
                 return notes[i].id
             }
         }
+        return -1
     }
 }
 
@@ -140,7 +154,6 @@ function editNote(id) {
     let noteCategory = ui.getNoteCategory()
     let result = modificarnota(id, noteContent, noteTitle, noteCategory)
     if (result > 0) {
-        ui.clearAllNotes();
         mostrarNotas()
         ui.showModal("Nota modificada", "La nota fue actualizada correctamente")
     } else {
