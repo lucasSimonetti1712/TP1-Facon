@@ -201,4 +201,26 @@ function buscarContenido() {
 }
 
 
+function agregarUsuario(id){
+    let idAgregar = document.getElementById("newUserId").value;
+    let rta = notes[id].addUser(idAgregar);
+    if (rta) {
+        ui.showModal("Éxito", "Usuario agregado a la nota");
+        select(id)
+    } else {
+        ui.showModal("Error", "Usuario no existe o está repetido");
+    }
+}
 
+function select(id) {
+    let select = document.getElementById("userSelect" + id); 
+    if (select) {
+        let options = '';
+        for (let i = 0; i < notes[id].users.length; i++) {
+            options += `
+                <option value="${notes[id].users[i]}">${notes[id].users[i]}</option>
+            `;
+        }
+        select.innerHTML += options;
+    }
+}
