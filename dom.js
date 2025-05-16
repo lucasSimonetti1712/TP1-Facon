@@ -155,23 +155,20 @@ class UserInterface {
                 </div>
                 <div style="display:flex">
                     <div>
-                        <input type="text" id="newUserId" placeholder="Nuevo ID de usuario">
+                        <input type="number" id="newUserId" placeholder="Nuevo ID de usuario">
                     </div>
                     <div>
                         <button onclick="agregarUsuario(${id})" class="btn btn-success">Agregar Usuario</button>
                     </div>
                     <div>
-                        <select id="userSelect${id}">
-                            <option value="" disabled selected>Seleccionar usuario a borrar</option>
-                        </select>
+                        <input type="number" id="deleteUserId" placeholder="Borrar ID de usuario">
                     </div>
-                </div>
-                <div>
-                    <button onclick="deleteUser(${id})" class="btn btn-danger">Borrar Usuario</button>
+                    <div>
+                        <button onclick="borrarUsuario(${id})" class="btn btn-danger">Borrar Usuario</button>
+                    </div>
                 </div>
             </div>
         `;
-        select(id);  // Call the select function to populate users
     }
 
     /**

@@ -73,7 +73,6 @@ function mostrarNotas() {
     for (let i = 0; i < notes.length; i++) {
         for (let j = 0; j < notes[i].users.length; j++) {
             if (notes[i].users[j] == userId) {
-                console.log("Encontré nota: ", notes[i] )
                 ui.createNote(notes[i].id, notes[i].title, notes[i].content, notes[i].category)
                 ui.addNoteToSelect(notes[i].id, notes[i].title)
             }
@@ -170,7 +169,6 @@ function borrarNota(id) {
     }
     return false;
 
-
 }
 
 function eraseNote(id) {
@@ -202,25 +200,22 @@ function buscarContenido() {
 
 
 function agregarUsuario(id){
-    let idAgregar = document.getElementById("newUserId").value;
+    let idAgregar = parseInt(document.getElementById("newUserId").value);
     let rta = notes[id].addUser(idAgregar);
     if (rta) {
         ui.showModal("Éxito", "Usuario agregado a la nota");
-        select(id)
     } else {
         ui.showModal("Error", "Usuario no existe o está repetido");
     }
 }
 
-function select(id) {
-    let select = document.getElementById("userSelect" + id); 
-    if (select) {
-        let options = '';
-        for (let i = 0; i < notes[id].users.length; i++) {
-            options += `
-                <option value="${notes[id].users[i]}">${notes[id].users[i]}</option>
-            `;
-        }
-        select.innerHTML += options;
+
+function borrarUsuario(id){
+    let idBorrar = parseInt(document.getElementById("deleteUserId").value);
+    let rta = notes[id].deleteUser(idBorrar);
+    if (rta) {
+        ui.showModal("Éxito", "Usuario borrado de la nota");
+    } else {
+        ui.showModal("Error", "Usuario no existe o está repetido");
     }
 }
