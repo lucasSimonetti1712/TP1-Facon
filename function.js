@@ -199,9 +199,20 @@ function buscarContenido() {
 }
 
 
-function agregarUsuario(id){
+function agregarUsuario(id) {
     let idAgregar = parseInt(document.getElementById("newUserId").value);
-    let rta = notes[id].addUser(idAgregar);
+    let rta = false;
+
+    for (let i = 0; i < notes.length; i++) {
+        if (notes[i].id == id) {
+            for (let j = 0; j < users.length; j++) {
+                if (users[j].id == idAgregar) {
+                    idUsuario = users[j].id;
+                    rta = notes[i].addUser(idUsuario);
+                }
+            }
+        }
+    }
     if (rta) {
         ui.showModal("Éxito", "Usuario agregado a la nota");
     } else {
@@ -210,9 +221,20 @@ function agregarUsuario(id){
 }
 
 
-function borrarUsuario(id){
+function borrarUsuario(id) {
     let idBorrar = parseInt(document.getElementById("deleteUserId").value);
-    let rta = notes[id].deleteUser(idBorrar);
+    let rta = false;
+
+    for (let i = 0; i < notes.length; i++) {
+        if (notes[i].id == id) {
+            for (let j = 0; j < users.length; j++) {
+                if (users[j].id == idBorrar) {
+                    idUsuario = users[j].id;
+                    rta = notes[i].deleteUser(idUsuario);
+                }
+            }
+        }
+    }
     if (rta) {
         ui.showModal("Éxito", "Usuario borrado de la nota");
     } else {
